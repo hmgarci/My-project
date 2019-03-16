@@ -10,10 +10,14 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         this.showName()
+        this.showMsg()
     }
 
     private fun showName(){
         var text=intent.getStringExtra("name").toString()
-        textName?.setText("Welcome " + text)
+        textName?.setText("Bienvenido " + text)
+    }
+    private fun showMsg(){
+        txtmsg?.setText(R.string.msg)
     }
 }

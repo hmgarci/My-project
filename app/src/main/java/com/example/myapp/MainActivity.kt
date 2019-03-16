@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("name",user)
             startActivity(intent)
         }else{
-            Toast.makeText(this@MainActivity, "ups! your info is not correct", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "ups! Tu información no es correcta", Toast.LENGTH_SHORT).show()
         }
     }
 }

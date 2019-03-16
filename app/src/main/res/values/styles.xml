@@ -39,7 +39,8 @@
     </style>
 
     <style name="myStyle">
-        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:background">@drawable/slider7</item>
+
     </style>
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
