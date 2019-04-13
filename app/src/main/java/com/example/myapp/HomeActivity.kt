@@ -10,10 +10,15 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         this.showName()
+
+
+    }
+    companion object {
+        const val EXTRA_SUNSET_PHOTO = "SunsetPhotoActivity.EXTRA_SUNSET_PHOTO"
     }
 
     private fun showName(){
         var text=intent.getStringExtra("name").toString()
-        textName?.setText("Welcome " + text)
+        //textName?.setText("Welcome " + text)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.model
+package com.example.myapp
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -9,12 +9,14 @@ data class SetPhoto(val url: String): Parcelable {
     constructor(parcel: Parcel) : this(parcel.readString())
     companion object {
         fun getSunsetPhotos(): Array<SetPhoto> {
-            return arrayOf<SetPhoto>(SetPhoto("https://goo.gl/32YN2B"),
+            return arrayOf<SetPhoto>(
+                SetPhoto("https://goo.gl/32YN2B"),
                 SetPhoto("https://goo.gl/Wqz4Ev"),
                 SetPhoto("https://goo.gl/U7XXdF"),
                 SetPhoto("https://goo.gl/ghVPFq"),
                 SetPhoto("https://goo.gl/qEaCWe"),
-                SetPhoto("https://goo.gl/vutGmM"))
+                SetPhoto("https://goo.gl/vutGmM")
+            )
         }
     }
 }
