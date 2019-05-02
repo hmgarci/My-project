@@ -26,8 +26,8 @@ class ImageDetail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image_detail)
 
-        setPhoto=intent.getParcelableExtra(ImageDetail.EXTRA_SUNSET_PHOTO)
-        imageView=findViewById(R.id.image)
+        setPhoto=intent.getParcelableExtra(EXTRA_SUNSET_PHOTO)
+        imageView=findViewById(R.id.iv_photo)
     }
     override fun onStart() {
         super.onStart()

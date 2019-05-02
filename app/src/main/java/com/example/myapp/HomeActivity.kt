@@ -70,7 +70,7 @@ class HomeActivity : AppCompatActivity() {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val sunsetPhoto = sunsetPhotos[position]
-                    val intent = Intent(context, HomeActivity::class.java).apply {
+                    val intent = Intent(context, ImageDetail::class.java).apply {
                         putExtra(ImageDetail.EXTRA_SUNSET_PHOTO, sunsetPhoto)
                     }
                     startActivity(intent)
