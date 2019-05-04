@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_register.*
+import java.lang.Exception
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -66,18 +67,27 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun createAuthentication(email:String, password:String,
                                      name:String,adress:String,user:String ){
-        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
-            progressBar.visibility=View.VISIBLE
-            auth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(this){
-                    task ->
+        try {
+            if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
+                progressBar.visibility=View.VISIBLE
+                auth.createUserWithEmailAndPassword(email,password)
+                    .addOnCompleteListener(this){
+                            task ->
                         if (task.isComplete){
                             val firebaseUser:FirebaseUser?=auth.currentUser
-                            this.sendConfirmationEmail(firebaseUser)
                             saveClientInfo(name,adress,user,firebaseUser)
+                            this.sendConfirmationEmail(firebaseUser)
+
+                        }else{
+                            task.exception?.printStackTrace()
                         }
-                }
+                    }
+            }
         }
+        catch (e: Exception) {
+           e.printStackTrace()
+        }
+
     }
 
     private fun saveClientInfo(name:String,adress:String,user:String,fireUser:FirebaseUser?){
@@ -100,6 +110,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun actionGoToLogin(){
-        startActivity(Intent(this,activity_main::class.java))
+        startActivity(Intent(this, MainActivity::class.java))
     }
 }
