@@ -78,10 +78,12 @@ class RegisterActivity : AppCompatActivity() {
                             saveClientInfo(name,adress,user,firebaseUser)
                             this.sendConfirmationEmail(firebaseUser)
 
+
                         }else{
                             task.exception?.printStackTrace()
                         }
                     }
+
             }
         }
         catch (e: Exception) {
