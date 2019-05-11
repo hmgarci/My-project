@@ -61,7 +61,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun goToHome(){
-        var intent= Intent(this,UploadImageActivity::class.java)
+        //var intent= Intent(this,UploadImageActivity::class.java)
+        var intent= Intent(this,HomeActivity::class.java)
         startActivity(intent)
     }
 }

@@ -12,9 +12,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_register.*
 import java.lang.Exception
+import java.util.*
+
+
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -28,6 +32,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var dbReference: DatabaseReference
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
 
 
@@ -49,6 +54,7 @@ class RegisterActivity : AppCompatActivity() {
         database= FirebaseDatabase.getInstance()
         auth= FirebaseAuth.getInstance()
         dbReference=database.reference.child("client")
+        firestore= FirebaseFirestore.getInstance()
     }
     fun register(view:View){
         putValues()
@@ -62,6 +68,7 @@ class RegisterActivity : AppCompatActivity() {
         val password:String=txtPassword.text.toString()
         val reEnterPassword:String=txtReEnterPassword.text.toString()
         createAuthentication(email,password,name,adress,user)
+        saveClientInfo(name,adress,user)
 
     }
 
@@ -75,7 +82,6 @@ class RegisterActivity : AppCompatActivity() {
                             task ->
                         if (task.isComplete){
                             val firebaseUser:FirebaseUser?=auth.currentUser
-                            saveClientInfo(name,adress,user,firebaseUser)
                             this.sendConfirmationEmail(firebaseUser)
 
 
@@ -92,11 +98,21 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-    private fun saveClientInfo(name:String,adress:String,user:String,fireUser:FirebaseUser?){
-        val userDB=dbReference.child(fireUser?.uid.toString())
+    private fun saveClientInfo(name:String,adress:String,user:String){
+        val userDocument = HashMap<String,String>()
+        userDocument.put("Name", name)
+        userDocument.put("Adress", adress)
+        userDocument.put("User", user)
+        firestore.collection("client")
+            .add(userDocument as Map<String, Any>).addOnSuccessListener {
+                Toast.makeText(this, "Se guardo correctamente", Toast.LENGTH_LONG).show()
+            }.addOnFailureListener(){
+                Toast.makeText(this, "No Se guardo correctamente", Toast.LENGTH_LONG).show()
+            }
+      /*  val userDB=dbReference.child(fireUser?.uid.toString())
         userDB.child("Name").setValue(name)
         userDB.child("Adress").setValue(adress)
-        userDB.child("User").setValue(user)
+        userDB.child("User").setValue(user)*/
     }
 
     private fun sendConfirmationEmail(user:FirebaseUser?){
