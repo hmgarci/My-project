@@ -10,6 +10,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.io.ByteArrayOutputStream
+import java.io.FileInputStream
 import java.io.IOException
 
 class UploadImageActivity : AppCompatActivity() {
@@ -17,10 +21,14 @@ class UploadImageActivity : AppCompatActivity() {
     private lateinit var imageview: ImageView
     private val GALLERY = 1
     private val CAMERA = 2
+    private val storage = FirebaseStorage.getInstance()
+    private var storageRef = storage.reference
+    private lateinit var imagesRef: StorageReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload_image)
+
         btn = findViewById<View>(R.id.btn) as Button
         imageview = findViewById<View>(R.id.iv) as ImageView
         btn!!.setOnClickListener { showPictureDialog() }
@@ -62,11 +70,20 @@ class UploadImageActivity : AppCompatActivity() {
         {
             if (data != null)
             {
-                val contentURI = data!!.data
+                val contentURI = data?.data
                 try
                 {
                     val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
+                    val filePath=storageRef?.child("images").child(contentURI.lastPathSegment)
                     imageview!!.setImageBitmap(bitmap)
+                    val uploadTask =filePath?.putFile(contentURI)
+                    //val uploadTask = imagesRef?.putBytes(converBitmap(bitmap))
+                    uploadTask?.addOnSuccessListener{
+                        Toast.makeText(this@UploadImageActivity, "Se subio correctamente!", Toast.LENGTH_SHORT).show()
+                    }?.addOnFailureListener(){
+                      uploadTask.exception?.printStackTrace()
+                        Toast.makeText(this@UploadImageActivity, "No se subio correctamente!", Toast.LENGTH_SHORT).show()
+                    }
 
                 }
                 catch (e: IOException) {
@@ -81,6 +98,15 @@ class UploadImageActivity : AppCompatActivity() {
         {
             val thumbnail = data!!.extras!!.get("data") as Bitmap
             imageview!!.setImageBitmap(thumbnail)
+            val stream=FileInputStream(thumbnail.toString())
+            val putStream = imagesRef?.putBytes(converBitmap(thumbnail))
         }
+    }
+
+    private fun converBitmap(bitmap:Bitmap): ByteArray {
+        val byteArray=ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArray)
+        val toByteArray = byteArray.toByteArray()
+        return toByteArray
     }
 }
