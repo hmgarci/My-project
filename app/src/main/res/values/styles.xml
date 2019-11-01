@@ -15,7 +15,7 @@
         <item name="android:textCursorDrawable">@null</item>
         <!--<item name="android:fontFamily" tools:targetApi="16">@font/open_sans_regular</item>-->
 
-       <!--Primary theme
+        <!--Primary theme
        <item name="colorAccent">#58595b</item>
        Primary theme -->
         <item name="android:inputType">textNoSuggestions</item>
@@ -41,6 +41,12 @@
     <style name="myStyle">
         <item name="android:background">@color/colorPrimaryDark</item>
     </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"

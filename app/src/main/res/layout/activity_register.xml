@@ -20,6 +20,12 @@
                       android:inputType="textPersonName"
                       android:hint="Name" />
 
+        <EditText android:id="@+id/input_user"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:inputType="textPersonName"
+                  android:hint="Apellido" />
+
 
         <!-- Address Label -->
 
@@ -28,6 +34,7 @@
                       android:layout_height="wrap_content"
                       android:inputType="textPostalAddress"
                       android:hint="Address" />
+
 
 
 
@@ -42,11 +49,7 @@
 
         <!-- mobile number -->
 
-            <EditText android:id="@+id/input_user"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:inputType="textPersonName"
-                      android:hint="User" />
+
 
         <!-- Password Label -->
 
@@ -63,6 +66,20 @@
                       android:layout_height="wrap_content"
                       android:inputType="textPassword"
                       android:hint="Re-enter Password"/>
+        <CheckBox
+                android:id="@+id/checkBoxAdmin"
+                android:layout_width="145dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Administrador"/>
+        <CheckBox
+                android:id="@+id/checkBoxClient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Cliente" />
 
         <!-- Signup Button -->
         <android.support.v7.widget.AppCompatButton
@@ -89,6 +106,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/progressBar"
                 android:visibility="gone"/>
+
 
     </LinearLayout>
 </ScrollView>

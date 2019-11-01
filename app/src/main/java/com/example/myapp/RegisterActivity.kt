@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -26,6 +27,8 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var txtAdress: EditText
     private lateinit var txtEmail: EditText
     private lateinit var txtUser: EditText
+    private lateinit var checkBoxClient: CheckBox
+    private lateinit var checkBoxAdmin: CheckBox
     private lateinit var txtPassword: EditText
     private lateinit var txtReEnterPassword: EditText
     private lateinit var progressBar: ProgressBar
@@ -33,6 +36,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var rol: String
 
 
 
@@ -44,6 +48,8 @@ class RegisterActivity : AppCompatActivity() {
     }
 
    private  fun initVariable(){
+        checkBoxAdmin=findViewById(R.id.checkBoxAdmin)
+        checkBoxClient=findViewById(R.id.checkBoxClient)
         txtName=findViewById(R.id.input_name)
         txtEmail=findViewById(R.id.input_email)
         txtAdress=findViewById(R.id.input_address)
@@ -67,8 +73,10 @@ class RegisterActivity : AppCompatActivity() {
         val user:String=txtUser.text.toString()
         val password:String=txtPassword.text.toString()
         val reEnterPassword:String=txtReEnterPassword.text.toString()
+        this.validateCheckBox()
+
         createAuthentication(email,password,name,adress,user)
-        saveClientInfo(name,adress,user)
+        saveClientInfo(name,adress,user,email,rol)
 
     }
 
@@ -98,11 +106,13 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-    private fun saveClientInfo(name:String,adress:String,user:String){
+    private fun saveClientInfo(name:String,adress:String,apellido:String,correo:String,rol:String){
         val userDocument = HashMap<String,String>()
-        userDocument.put("Name", name)
-        userDocument.put("Adress", adress)
-        userDocument.put("User", user)
+        userDocument.put("Nombre", name)
+        userDocument.put("Direccion", adress)
+        userDocument.put("Apellido", apellido)
+        userDocument.put("ID_cliente",correo)
+        userDocument.put("rol",rol)
         firestore.collection("client")
             .add(userDocument as Map<String, Any>).addOnSuccessListener {
                 Toast.makeText(this, "Se guardo correctamente", Toast.LENGTH_LONG).show()
@@ -129,5 +139,13 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun actionGoToLogin(){
         startActivity(Intent(this, MainActivity::class.java))
+    }
+    private fun validateCheckBox(){
+
+        if (checkBoxClient.isChecked){
+            rol=checkBoxClient.text.toString()
+        }else if (checkBoxAdmin.isChecked){
+            rol=checkBoxAdmin.text.toString()
+        }
     }
 }
